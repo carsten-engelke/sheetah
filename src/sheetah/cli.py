@@ -101,6 +101,8 @@ def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(description="Search markdown document interactively.")
     parser.add_argument("file", help="Path to markdown file")
+    parser.add_argument("--separator", "-s", default="##",
+                        help="Custom separator string that denotes segment headers (default: '##')")
     args = parser.parse_args(argv)
 
     try:
@@ -109,7 +111,7 @@ def main(argv=None):
         print(f"Unable to read {args.file}: {e}")
         sys.exit(1)
 
-    doc = Document.from_markdown(text)
+    doc = Document.from_markdown(text, separator=args.separator)
     ui = DocSearchUI(doc)
     ui.run()
 

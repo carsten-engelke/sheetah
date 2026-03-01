@@ -130,12 +130,13 @@ class Segment:
 
 
 class Document:
-    def __init__(self, items: Optional[List[Segment]] = None, description: str = ""):
+    def __init__(self, items: Optional[List[Segment]] = None, description: str = "", separator: str = "##"):
         self.items: List[Segment] = items or []
         self.description: str = description
+        self.separator: str = separator
 
     @classmethod
-    def from_markdown(cls, md: str) -> "Document":
+    def from_markdown(cls, md: str, separator: str = "##") -> "Document":
         """Create a document from a markdown string.
 
         Everything **before** the first H2 header ("##") is treated as the
@@ -148,7 +149,10 @@ class Document:
         description_lines: List[str] = []
         seen_first_header = False
 
-        header_re = re.compile(r"^##+\s*(.*)")
+        # Build a regex that matches the exact separator at line start.
+        # Escape the separator to treat characters like '#' literally.
+        esc = re.escape(separator)
+        header_re = re.compile(rf"^{esc}\s*(.*)")
 
         for line in lines:
             m = header_re.match(line)
@@ -175,7 +179,7 @@ class Document:
             description_lines = lines
 
         desc = "".join(description_lines).strip()
-        return cls(items, description=desc)
+        return cls(items, description=desc, separator=separator)
 
     def list(self, names_only: bool = True) -> List:
         return [it.name for it in self.items] if names_only else list(self.items)
