@@ -1,0 +1,47 @@
+version = 1
+revision = 3
+requires-python = ">=3.13"
+
+[[package]]
+name = "html2text"
+version = "2025.4.15"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f8/27/e158d86ba1e82967cc2f790b0cb02030d4a8bef58e0c79a8590e9678107f/html2text-2025.4.15.tar.gz", hash = "sha256:948a645f8f0bc3abe7fd587019a2197a12436cd73d0d4908af95bfc8da337588", size = 64316, upload-time = "2025-04-15T04:02:30.045Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1d/84/1a0f9555fd5f2b1c924ff932d99b40a0f8a6b12f6dd625e2a47f415b00ea/html2text-2025.4.15-py3-none-any.whl", hash = "sha256:00569167ffdab3d7767a4cdf589b7f57e777a5ed28d12907d8c58769ec734acc", size = 34656, upload-time = "2025-04-15T04:02:28.44Z" },
+]
+
+[[package]]
+name = "markdown"
+version = "3.10.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2b/f4/69fa6ed85ae003c2378ffa8f6d2e3234662abd02c10d216c0ba96081a238/markdown-3.10.2.tar.gz", hash = "sha256:994d51325d25ad8aa7ce4ebaec003febcce822c3f8c911e3b17c52f7f589f950", size = 368805, upload-time = "2026-02-09T14:57:26.942Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/1f/77fa3081e4f66ca3576c896ae5d31c3002ac6607f9747d2e3aa49227e464/markdown-3.10.2-py3-none-any.whl", hash = "sha256:e91464b71ae3ee7afd3017d9f358ef0baf158fd9a298db92f1d4761133824c36", size = 108180, upload-time = "2026-02-09T14:57:25.787Z" },
+]
+
+[[package]]
+name = "pygubu"
+version = "0.40"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/10/3a/20b9bb48008200bc09bacddf3ca9417d04fcc30565d749478595710fdced/pygubu-0.40.tar.gz", hash = "sha256:1d765e1a0e47fece8b83c7f43102488b3d9ddbeb5f161d7dad6b69a33f8eef43", size = 178287, upload-time = "2026-01-25T06:05:30.269Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ba/96/b8561243b82d2aba01f31252c76c107c83105536775799a044fbde9cca1b/pygubu-0.40-py3-none-any.whl", hash = "sha256:dd169faf8ad3eab1635395c783db6d14006d3b6d4546c58041ee0cf6f9226bed", size = 224322, upload-time = "2026-01-25T06:05:27.979Z" },
+]
+
+[[package]]
+name = "sheetah"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "html2text" },
+    { name = "markdown" },
+    { name = "pygubu" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "html2text", specifier = ">=2020.1.16" },
+    { name = "markdown", specifier = ">=3.0" },
+    { name = "pygubu", specifier = ">=0.40" },
+]
