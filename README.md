@@ -1,82 +1,96 @@
 # sheetah
 
-`sheetah` ist ein einfaches Python-Paket zur Verarbeitung von Markdown-Dokumenten.
-Es gliedert den Text an H2-Überschriften ("##") in **Segmente**, erlaubt fuzzy Suche
-und bietet ein interaktives CLI mit Clipboard‑Kopie.
+sheetah is a lightweight Python library for working with Markdown documents.
+It splits a Markdown file into segments based on H2 headers ("##"), provides
+fuzzy search over segment titles and content, and includes an interactive
+command-line interface with clipboard copy support.
 
 ## Installation
+
+Install from PyPI:
 
 ```bash
 pip install sheetah
 ```
 
-Oder lokal im Quellcode (virtuellesenv):
+Or install and develop locally in a virtual environment:
 
 ```bash
 cd sheetah
 python -m venv .venv
-. .venv/Scripts/activate  # oder source .venv/bin/activate
+# Windows
+. .venv/Scripts/activate
+# macOS / Linux
+source .venv/bin/activate
 python -m pip install -e .[all]
 ```
 
-> Die Extras umfassen `prompt_toolkit` und `pyperclip` für die interaktive UI.
+The optional extras include `prompt_toolkit` and `pyperclip` for the
+interactive UI.
 
-## Nutzung
+## Usage
 
-### Programmatisch
+### Programmatic
 
 ```python
 from sheetah import Document
 
-txt = """Einführung
+md = """Introduction
 
-## Abschnitt 1
+## Section 1
 Text1
 
-## Abschnitt 2
+## Section 2
 Text2
 """
 
-doc = Document.from_markdown(txt)
+doc = Document.from_markdown(md)
 print(doc.description)
 for seg in doc.search("Text"):
     print(seg.name)
     print(seg.text())
 ```
 
-### Kommandozeile
+### Command line
 
 ```bash
-sheetah pfad/zur/datei.md
+sheetah path/to/file.md
 ```
 
-Eine interaktive Oberfläche erscheint:
+The interactive UI lets you:
 
-1. Eingabe der Suchanfrage oben
-2. Ergebnisse werden aufgelistet, bester Treffer ist vorgeschlagen
-3. Mit Pfeil hoch/runter navigieren; Vorschau rechts
-4. `<Enter>` kopiert den Text des ausgewählten Segments in die Zwischenablage
-5. `<Ctrl-C>` oder `<Ctrl-Q>` beendet das Programm
+1. Enter a search query at the top.
+2. See results listed with the best match selected by default.
+3. Navigate results with the arrow keys and preview the segment.
+4. Press Enter to copy the selected segment's text to the clipboard.
+5. Press Ctrl-C or Ctrl-Q to exit.
 
-Die Beschreibung des Dokuments (alles vor dem ersten `##`) wird über der
-Suchzeile angezeigt.
+The document description (everything before the first `##`) is shown above
+the search input.
 
 ## API
 
-- `Document.from_markdown(markdown: str) -> Document` – erstellt ein Dokument.
-- `Document.items` – Liste der `Segment`-Instanzen.
-- `Document.description` – Markdown-Text vor dem ersten Abschnitt.
-- `Document.search(query: str, limit: Optional[int]=None)` – fuzzy Suche.
-- `Segment.name` – Name (Header) des Segments.
-- `Segment.text()` – reiner Text.
-- `Segment.html()` – HTML-Konvertierung.
+- `Document.from_markdown(markdown: str) -> Document` — create a document from
+  a Markdown string.
+- `Document.items` — list of `Segment` instances.
+- `Document.description` — Markdown text before the first H2 header.
+- `Document.search(query: str, limit: Optional[int] = None)` — fuzzy search.
+- `Segment.name` — segment title (header).
+- `Segment.text()` — plain-text representation of the segment.
+- `Segment.html()` — HTML representation of the segment.
 
 ## Tests
+
+Run the test suite with:
 
 ```bash
 pytest
 ```
 
-## Lizenz
+## Contributing
 
-MIT, siehe `LICENSE`.
+Contributions are welcome. Please open issues or pull requests on GitHub.
+
+## License
+
+MIT — see the `LICENSE` file for details.
