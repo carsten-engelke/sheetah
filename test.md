@@ -4,8 +4,16 @@ This is a list of plants that might grow on my balcony.
 ## 1. Petunias
 Colorful summer flowers that thrive in sunny spots and bloom throughout the season.
 
+- **Water needs:** water regularly, never let the soil dry out completely
+- **Sun exposure:** full sun to partial shade
+- **Lifespan:** annual plant (summer bloom)
+
 ## 2. Geraniums
 Hardy and reliable, perfect for sunny balconies with minimal maintenance.
+
+- **Water needs:** moderate watering, allow soil to dry slightly between waterings
+- **Sun exposure:** prefers full sun
+- **Lifespan:** perennial, often kept in pots over multiple seasons
 
 ## 3. Pansies
 Cold-resistant flowers ideal for spring and autumn on German balconies.
