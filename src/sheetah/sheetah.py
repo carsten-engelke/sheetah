@@ -215,10 +215,10 @@ class Document:
 # expose CLI entrypoint for setuptools
 try:
     from . import cli
-
-    def main():
-        return cli.main()
 except ImportError:  # pragma: no cover - running without package context
-    def main():
-        # fallback: no cli available
+    cli = None
+
+def main():
+    if cli is None:
         raise RuntimeError("CLI not available; install prompt_toolkit first")
+    return cli.main()
