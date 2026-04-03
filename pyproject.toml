@@ -1,6 +1,6 @@
 [project]
 name = "sheetah"
-version = "0.1.1"
+version = "0.1.2"
 description = "A small toolkit to parse Markdown into searchable segments"
 readme = "README.md"
 authors = [
