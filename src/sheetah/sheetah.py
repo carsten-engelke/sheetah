@@ -8,11 +8,6 @@ try:
 except ImportError:  # pragma: no cover
     _markdown_lib = None
 
-try:
-    import html2text as _html2text_lib
-except ImportError:  # pragma: no cover
-    _html2text_lib = None
-
 from difflib import SequenceMatcher
 
 
@@ -27,11 +22,11 @@ class Segment:
     def text(self) -> str:
         """Return a plain-text version of the markdown content.
 
-        If ``html2text`` (and ``markdown``) are available we generate HTML first
+        If ``markdown`` is available we generate HTML first
         and then convert that to plain text; this gives a much better result
         than the simple regex stripping that was previously implemented.  A
         fallback regex stripper remains so that the method always returns
-        something even when the optional dependencies are missing.
+        something even when the optional dependency is missing.
         """
         md = self._markdown
 
