@@ -205,6 +205,15 @@ class Document:
         scored.sort(key=lambda x: x[0], reverse=True)
         results = [it for _, it in scored]
         return results[:limit] if limit else results
+    
+    def append(self, name: str, markdown: str):
+        self.items.append(Segment(name=name, _markdown=markdown))
+
+    def remove(self, name: str):
+        self.items = [it for it in self.items if it.name != name]
+
+    def clear(self):
+        self.items = []
 
 
 # expose CLI entrypoint for setuptools

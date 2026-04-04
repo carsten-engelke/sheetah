@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+from pathlib import Path
 from typing import List
 
 from prompt_toolkit import Application
@@ -100,18 +101,27 @@ class DocSearchUI:
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     parser = argparse.ArgumentParser(description="Search markdown document interactively.")
-    parser.add_argument("file", help="Path to markdown file")
+    parser.add_argument("--file", "-f", help="Path to markdown file")
     parser.add_argument("--separator", "-s", default="##",
                         help="Custom separator string that denotes segment headers (default: '##')")
     args = parser.parse_args(argv)
 
     try:
-        text = open(args.file, encoding="utf-8").read()
+        if args.file is not None:
+            text = open(args.file, encoding="utf-8").read()
+            doc = Document.from_markdown(text, separator=args.separator)
+        else:
+            doc = Document(items=[], description="sheetah + " + str(Path.cwd()), separator=args.separator)
+            for file in Path.cwd().glob("*.md"):
+                text = open(file, encoding="utf-8").read()
+                # append segments from subsequent files to the same document
+                other = Document.from_markdown(text, separator=args.separator)
+                for seg in other.items:
+                    doc.append(seg.name, seg._markdown)
     except Exception as e:
         print(f"Unable to read {args.file}: {e}")
         sys.exit(1)
 
-    doc = Document.from_markdown(text, separator=args.separator)
     ui = DocSearchUI(doc)
     ui.run()
 
