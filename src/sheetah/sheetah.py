@@ -176,6 +176,12 @@ class Document:
         desc = "".join(description_lines).strip()
         return cls(items, description=desc, separator=separator)
 
+    def to_markdown(self) -> str:
+        parts = [self.description.strip()] if self.description.strip() else []
+        for it in self.items:
+            parts.append(f"{self.separator} {it.name}\n{it.markdown().rstrip()}")
+        return "\n\n".join(parts)
+
     def list(self, names_only: bool = True) -> List:
         return [it.name for it in self.items] if names_only else list(self.items)
 
