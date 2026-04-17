@@ -14,8 +14,7 @@ from prompt_toolkit.widgets import TextArea, Label, Frame
 
 import pyperclip
 
-from sheetah.sheetah import Document, Segment
-
+from sheetah import Document, Segment
 
 class DocSearchUI:
     def __init__(self, document: Document):
@@ -97,6 +96,23 @@ class DocSearchUI:
     def run(self):
         self.app.run()
 
+def load_document_upon_startup(file: str | None, sep: str) -> Document:
+    try:
+        if file is not None:
+            text = open(file, encoding="utf-8").read()
+            doc = Document.from_markdown(text, separator=sep)
+        else:
+            doc = Document(items=[], description="sheetah + " + str(Path.cwd()), separator=sep)
+            for cwdfile in Path.cwd().glob("*.md"):
+                text = open(cwdfile, encoding="utf-8").read()
+                # append segments from subsequent files to the same document
+                other = Document.from_markdown(text, separator=sep)
+                for seg in other.items:
+                    doc.append(seg.name, seg._markdown)
+        return doc
+    except Exception as e:
+        print(f"Unable to read {file}: {e}")
+        sys.exit(1)
 
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
@@ -105,24 +121,7 @@ def main(argv=None):
     parser.add_argument("--separator", "-s", default="##",
                         help="Custom separator string that denotes segment headers (default: '##')")
     args = parser.parse_args(argv)
-
-    try:
-        if args.file is not None:
-            text = open(args.file, encoding="utf-8").read()
-            doc = Document.from_markdown(text, separator=args.separator)
-        else:
-            doc = Document(items=[], description="sheetah + " + str(Path.cwd()), separator=args.separator)
-            for file in Path.cwd().glob("*.md"):
-                text = open(file, encoding="utf-8").read()
-                # append segments from subsequent files to the same document
-                other = Document.from_markdown(text, separator=args.separator)
-                for seg in other.items:
-                    doc.append(seg.name, seg._markdown)
-    except Exception as e:
-        print(f"Unable to read {args.file}: {e}")
-        sys.exit(1)
-
-    ui = DocSearchUI(doc)
+    ui = DocSearchUI(load_document_upon_startup(args.file, args.separator))
     ui.run()
 
 

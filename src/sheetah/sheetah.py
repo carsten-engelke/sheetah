@@ -2,12 +2,6 @@ from dataclasses import dataclass
 from typing import List, Optional
 import re
 
-# use established third-party libraries for conversions
-try:
-    import markdown as _markdown_lib
-except ImportError:  # pragma: no cover
-    _markdown_lib = None
-
 from difflib import SequenceMatcher
 
 
